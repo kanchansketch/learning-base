@@ -1,6 +1,8 @@
 package in.reinventing.course.api;
 
 import in.reinventing.course.model.*;
+import in.reinventing.course.reposistory.CourseRepository;
+import in.reinventing.course.service.CourseService;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -10,8 +12,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class CourseAPITest extends TestCase {
-
-    private CourseAPI courseAPI = new CourseAPI();
+    private CourseRepository courseRepository = new CourseRepository();
+    private CourseService courseService = new CourseService(courseRepository);
+    private CourseAPI courseAPI = new CourseAPI(courseService);
     private List<Course> courses = new ArrayList<>();
 
     public void setUp() throws Exception {
@@ -61,6 +64,8 @@ public class CourseAPITest extends TestCase {
         course2.setCourseId(UUID.randomUUID().toString());
         course2.setTitle("Javascript");
         this.courses.add(course2);
+
+        courseAPI.saveAll(this.courses);
     }
 
     public void tearDown() throws Exception {
@@ -73,7 +78,7 @@ public class CourseAPITest extends TestCase {
     }
 
     public void testCourseFind(){
-        final List<Course> courses1 = courseAPI.courseList(1,this.courses.size());
+        final List<Course> courses1 = courseAPI.courseList(0,this.courses.size());
         Assert.assertEquals(courses1,this.courses);
     }
 }

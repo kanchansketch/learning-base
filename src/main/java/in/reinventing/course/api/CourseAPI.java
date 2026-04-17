@@ -8,6 +8,10 @@ import java.util.List;
 public class CourseAPI {
     private CourseService courseService;
 
+    public CourseAPI(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
     public List<Course> courseList(int pageNumber, int pageSize){
         return this.courseService.fetchCourse(pageNumber,pageSize);
     }

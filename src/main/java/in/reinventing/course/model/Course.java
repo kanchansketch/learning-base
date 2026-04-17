@@ -1,5 +1,7 @@
 package in.reinventing.course.model;
 
+import java.util.Objects;
+
 public class Course implements Cloneable{
     private String courseId;
     private String title;
@@ -68,5 +70,16 @@ public class Course implements Cloneable{
     @Override
     public Course clone() throws CloneNotSupportedException{
         return (Course) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Course course)) return false;
+        return Objects.equals(getCourseId(), course.getCourseId()) && Objects.equals(getTitle(), course.getTitle()) && Objects.equals(getDescription(), course.getDescription()) && getLevel() == course.getLevel() && getStatus() == course.getStatus() && Objects.equals(getCreatedBy(), course.getCreatedBy()) && Objects.equals(getMetaData(), course.getMetaData());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCourseId(), getTitle(), getDescription(), getLevel(), getStatus(), getCreatedBy(), getMetaData());
     }
 }
